@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlocks/Shared.Common/Shared.Common.csproj" />
+    <Project Path="BuildingBlocks/Shared.Contracts/Shared.Contracts.csproj" />
+    <Project Path="BuildingBlocks/Shared.Messaging/Shared.Messaging.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="NotificationService/NotificationService.csproj" Id="48663fc8-77b2-4b75-b309-c8c5f24f73f7" />
+    <Project Path="Services/ApiGateway/ApiGateway.csproj" />
+    <Project Path="Services/CatalogService/CatalogService.csproj" />
+    <Project Path="Services/FulfillmentService/FulfillmentService.csproj" />
+    <Project Path="Services/OrderService/OrderService.csproj" />
+    <Project Path="Services/PaymentService/PaymentService.csproj" />
+  </Folder>
+</Solution>
