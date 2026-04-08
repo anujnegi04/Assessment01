@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IEventBus, InMemoryEventBus>();
 builder.Services.AddScoped<ProcessPaymentCommandHandler>();
 builder.Services.AddScoped<PaymentEventSubscriber>();
 builder.Services.AddScoped<GetPaymentByOrderIdQueryHandler>();
-builder.Services.AddHttpClient<FulfillmentClientService>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

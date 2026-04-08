@@ -6,31 +6,43 @@ namespace ApiGateway.Services
     public class GatewayService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _orderServiceUrl;
+        private readonly string _paymentServiceUrl;
+        private readonly string _fulfillmentServiceUrl;
 
-        public GatewayService(HttpClient httpClient)
+        public GatewayService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _orderServiceUrl = configuration["ServiceUrls:OrderService"]
+                ?? throw new InvalidOperationException("ServiceUrls:OrderService is not configured.");
+            _paymentServiceUrl = configuration["ServiceUrls:PaymentService"]
+                ?? throw new InvalidOperationException("ServiceUrls:PaymentService is not configured.");
+            _fulfillmentServiceUrl = configuration["ServiceUrls:FulfillmentService"]
+                ?? throw new InvalidOperationException("ServiceUrls:FulfillmentService is not configured.");
         }
 
-        public async Task<HttpResponseMessage>CreateOrderAsync(object request)
+        public async Task<HttpResponseMessage> CreateOrderAsync(object request)
         {
             return await _httpClient.PostAsJsonAsync(
-                "https://localhost:7179/api/orders",request);
+                $"{_orderServiceUrl}/api/orders", request);
         }
-        public async Task<string?>GetOrderAsync(Guid orderId)
+
+        public async Task<string?> GetOrderAsync(Guid orderId)
         {
             return await _httpClient.GetStringAsync(
-                $"https://localhost:7179/api/orders/{orderId}");
+                $"{_orderServiceUrl}/api/orders/{orderId}");
         }
-        public async Task<string?>GetPaymentByOrderAsync(Guid orderId)
+
+        public async Task<string?> GetPaymentByOrderAsync(Guid orderId)
         {
             return await _httpClient.GetStringAsync(
-               $"https://localhost:7226/api/payment/by-order/{orderId}" );
+                $"{_paymentServiceUrl}/api/payment/by-order/{orderId}");
         }
-        public async Task<string?>GetFulfillmentByOrderAsync(Guid orderId)
+
+        public async Task<string?> GetFulfillmentByOrderAsync(Guid orderId)
         {
             return await _httpClient.GetStringAsync(
-                $"https://localhost:7253/api/fulfillments/by-order/{orderId}");
+                $"{_fulfillmentServiceUrl}/api/fulfillments/by-order/{orderId}");
         }
 
         public async Task<OrderWorkflowSummaryDto> GetOrderWorkflowSummaryAsync(Guid orderId)

@@ -11,13 +11,13 @@ namespace PaymentService.Commands
     {
         private readonly PaymentDbContext _context;
         private readonly IEventBus _eventBus;
-        private readonly FulfillmentClientService _fulfillmentClientService;
+        
 
-        public ProcessPaymentCommandHandler(PaymentDbContext context, IEventBus eventBus,FulfillmentClientService fulfillmentClientService)
+        public ProcessPaymentCommandHandler(PaymentDbContext context, IEventBus eventBus)
         {
             _context = context;
             _eventBus = eventBus;
-            _fulfillmentClientService = fulfillmentClientService;
+           
         }
 
         public async Task<Payment> HandleAsync(ProcessPaymentCommand command)
@@ -51,8 +51,7 @@ namespace PaymentService.Commands
                 ProcessedAtUtc = payment.ProcessedAtUtc ?? DateTime.UtcNow,
                 CorrelationId = payment.CorrelationId,
             });
-
-            await _fulfillmentClientService.CreateFulfillmentAsync(payment);
+                      
             return payment;
         }
     }

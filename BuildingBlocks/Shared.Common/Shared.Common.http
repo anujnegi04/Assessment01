@@ -1,6 +1,0 @@
-@Shared.Common_HostAddress = http://localhost:5160
-
-GET {{Shared.Common_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
